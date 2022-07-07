@@ -1,0 +1,41 @@
+@font-face {
+    font-family: Ubuntu-Bold;
+    src:url(../fonts/Ubuntu-Bold.ttf)
+}
+@font-face {
+    font-family: Ubuntu-Regular;
+    src:url(../fonts/Ubuntu-Regular.ttf)
+}
+.login{
+    width: 350px;
+    height: auto;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #6666;
+    margin: 0 auto;
+    border-radius: 20px;
+    padding: 5px 15px;
+}
+
+.lable{
+    font-family: Ubuntu-bold;
+    margin: 10px auto;
+    width: 100px;
+    font-size: 3vh;
+}
+.u_lable{
+    font-size: 2vh;
+    font-family: 'Ubuntu-Regular';
+    margin: auto;
+}
+.p_lable{
+    font-size: 2vh;
+    font-family: 'Ubuntu-Regular';
+    margin: auto;
+}
+.main{
+    width: min-content;
+    margin: auto;
+}

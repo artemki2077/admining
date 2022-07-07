@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename='style/main.css') }}">
+    <title>notes</title>
+</head>
+<body>
+    <center><h1 style="font-family: Ubuntu-Bold;">Your notes</h1></center>
+    <div class="note">
+        <div class="id">№</div>
+        <div class="name">
+            Name
+        </div>
+        <div class="comment">
+            Comment
+        </div>
+        <div class="href">
+            href
+        </div>
+    </div>
+    {% if notes%}
+        {% for i in notes %}
+        <div class="note">
+            <div class="id">{{loop.index0 + 1}}</div>
+            <div class="name">
+                {{notes[i]['name']}}
+            </div>
+            <div class="comment">
+                {{notes[i]['comment']}}
+            </div>
+            <div class="href">
+                <a href="notes/{{hex(i)}}">notes/{{hex(i)}}</a>
+            </div>
+        </div>
+        
+        {% endfor %}
+    {% else %}
+        no Data
+    {% endif %}
+</body>
+</html>

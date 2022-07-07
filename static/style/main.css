@@ -1,0 +1,29 @@
+@font-face {
+    font-family: Ubuntu-Bold;
+    src:url(../fonts/Ubuntu-Bold.ttf)
+}
+@font-face {
+    font-family: Ubuntu-Regular;
+    src:url(../fonts/Ubuntu-Regular.ttf)
+}
+
+.note{
+    padding: 20px;
+    display: flex;
+    align-content: center;
+    justify-content: flex-start;
+    background-color: #6666;
+    margin: 5px;
+    font-family: Ubuntu-Regular;
+    font-size: 20px;
+    border-radius: 20px;
+}
+.id{
+    margin: 0 20px;
+}
+.comment{
+    margin: 0 20px;
+}
+.href{
+    margin: 0 20px;
+}

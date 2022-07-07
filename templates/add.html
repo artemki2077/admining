@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="{{ url_for('static',filename='style/add.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>add</title>
+</head>
+
+<body>
+    <div class="form">
+        <form method="post">
+            <div class="block name">
+                Name
+                <input type="text" placeholder="Name" name='name'>
+            </div>
+            <div class="block d_W">
+                Date/views
+                <label class="switch">
+                    <input id="checkbox" type="checkbox" name='date/view'>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class='block date'>
+                End data
+                <input name='date' type="date">
+            </div>
+            <div class='block views'>
+                count views
+                <input name='views' type="number">
+            </div>
+            <div class='select'>
+                <div>
+                    File
+                    <input name='type' value='file' type='radio' checked>
+                </div>
+                <div>
+                    Image
+                    <input name='type' value='img' type='radio'>
+                </div>
+                <div>
+                    Text
+                    <input name='type' value='txt' type='radio'>
+                </div>
+                
+            </div>
+            <div class='block file'>
+                file
+                <input type="file" name='note_file'>
+            </div>
+            <div class='block image'>
+                Image file
+                <input type="file" name="note_img" accept="image/*" />
+            </div>
+            <div class='block text'>
+                text
+                <textarea id="textComment" name="note_txt"
+                    style="padding-bottom:250px ;
+                    font-size:16px;
+                    height: 300px;
+                    width: 500px;" ></textarea>
+            </div>
+            <div class='block'>
+                <input type='submit' value='add' style='
+                    font-size: 20px;
+
+                '>
+            </div>
+
+        </form>
+    </div>
+    <script src="{{ url_for('static',filename='scripts/add.js')}}">
+
+    </script>
+</body>
+</html>
