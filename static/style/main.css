@@ -27,3 +27,9 @@
 .href{
     margin: 0 20px;
 }
+.name{
+    font-family: Ubuntu-Bold;
+}
+.viewed{
+    font-family: Ubuntu-Regular;
+}

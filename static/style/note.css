@@ -1,0 +1,21 @@
+@font-face {
+    font-family: Ubuntu-Bold;
+    src:url(../fonts/Ubuntu-Bold.ttf)
+}
+@font-face {
+    font-family: Ubuntu-Regular;
+    src:url(../fonts/Ubuntu-Regular.ttf)
+}
+.name{
+    font-family: Ubuntu-Bold;
+    font-size: 35px;
+}
+.note{
+    background-color: #6666;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px;
+}
+.data{
+    background-color: white;
+}

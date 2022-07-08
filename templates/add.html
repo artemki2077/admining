@@ -10,8 +10,9 @@
 </head>
 
 <body>
+    <a style="font-family: Ubuntu-Bold; font-size: 30px; margin: 20px" href="/">back</a>
     <div class="form">
-        <form method="post">
+        <form method="post" action="" enctype="multipart/form-data">
             <div class="block name">
                 Name
                 <input type="text" placeholder="Name" name='name'>
@@ -47,20 +48,26 @@
                 
             </div>
             <div class='block file'>
-                file
-                <input type="file" name='note_file'>
+                File
+                <input type="file" id="uploadInput" name='file'>
             </div>
             <div class='block image'>
                 Image file
-                <input type="file" name="note_img" accept="image/*" />
+                <input type="file" id="uploadInput" name="file_img" accept="image/*" />
             </div>
             <div class='block text'>
                 text
-                <textarea id="textComment" name="note_txt"
+                <textarea id="text" name="note_txt"
                     style="padding-bottom:250px ;
                     font-size:16px;
                     height: 300px;
                     width: 500px;" ></textarea>
+            </div>
+            <div class='block comment'>
+                comment
+                <textarea id="text" name="comment"
+                    style="padding-bottom:250px ;
+                    font-size:10px;" ></textarea>
             </div>
             <div class='block'>
                 <input type='submit' value='add' style='
@@ -68,7 +75,10 @@
 
                 '>
             </div>
-
+            <div id="e-fileinfo"></div>
+            <div id="answer">
+                {{msg}}
+            </div>
         </form>
     </div>
     <script src="{{ url_for('static',filename='scripts/add.js')}}">

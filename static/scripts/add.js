@@ -30,3 +30,15 @@ selector.addEventListener('change', function() {
     d_img.style.display = s_img.checked ? 'block' : "none";
     d_txt.style.display = s_txt.checked ? 'block' : "none";
   });
+
+  function updateSize() {
+    var file = document.getElementById("uploadInput").files[0];
+    if((file.size / 1024) / 1024 > 10){
+      document.querySelector('#answer').innerHTML = "file size more then 10Mb"
+    }else if(document.querySelector('#answer').innerHTML.length !== 0){
+      document.querySelector('#answer').innerHTML = "norm"
+    }
+    
+  }
+  
+  document.getElementById('uploadInput').addEventListener('change', updateSize);

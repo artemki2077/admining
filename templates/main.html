@@ -20,6 +20,9 @@
         <div class="href">
             href
         </div>
+        <div class="viewed">
+            viewed
+        </div>
     </div>
     {% if notes%}
         {% for i in notes %}
@@ -32,7 +35,10 @@
                 {{notes[i]['comment']}}
             </div>
             <div class="href">
-                <a href="notes/{{hex(i)}}">notes/{{hex(i)}}</a>
+                <a href="note/{{hex(i)}}">note/{{hex(i)}}</a>
+            </div>
+            <div class="viewed">
+                {{notes[i]['viewed']}} / {{notes[i]['time']}}
             </div>
         </div>
         
@@ -40,5 +46,6 @@
     {% else %}
         no Data
     {% endif %}
+    <a style="font-family: Ubuntu-Bold; font-size: 30px; margin: 20px" href="/add">add</a>
 </body>
 </html>
