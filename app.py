@@ -4,9 +4,13 @@ from flask_admin import Admin
 from flask_admin import BaseView
 from flask_admin.contrib.sqla import ModelView
 from hashlib import sha256
-from random import randbytes
+from flask_sessionstore import Session
+# from random import randbytes
 from flask_migrate import Migrate
-from flask_security import UserMixin
+# from flask_security import UserMixin
+from flask_session_captcha import FlaskSessionCaptcha
+
+
 import datetime as dt
 import os
 import re
@@ -15,11 +19,17 @@ import re
 app = Flask(__name__)
 app.secret_key = "str(randbytes(16))"
 
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 10
-app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"] = "filesystem"
+app.config['SESSION_TYPE'] = 'sqlalchemy'
+app.config['CAPTCHA_SESSION_KEY'] = 'captcha_image'
+app.config['CAPTCHA_ENABLE'] = True
+app.config['CAPTCHA_LENGTH'] = 5
+app.config['CAPTCHA_WIDTH'] = 160
+app.config['CAPTCHA_HEIGHT'] = 60
+Session(app)
+captcha = FlaskSessionCaptcha(app)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
@@ -39,7 +49,7 @@ class MyAdmin(ModelView):
         return False
 
 
-class User(db.Model, UserMixin):
+class User(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     usersname = db.Column(db.String(255), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)
@@ -97,8 +107,7 @@ def page_add():
                 db.session.add(new_note)
                 db.session.commit()
                 print(new_note.id)
-                open(f'static/notes/{hex(new_note.id)}.txt',
-                     'w').write(note_txt)
+                open(f'static/notes/{hex(new_note.id)}.txt','w').write(note_txt)
             else:
                 new_note = Note(name=name, comment=comment, u_id=int(
                     session['id']), viewed=0, time=time)
@@ -106,8 +115,7 @@ def page_add():
                 db.session.commit()
                 file = request.files['file'] if type == 'file' else request.files['file_img']
                 print(request.files)
-                file.save(
-                    f'static/notes/{hex(new_note.id)}.{file.filename.split(".")[-1]}')
+                file.save(f'static/notes/{hex(new_note.id)}.{file.filename.split(".")[-1]}')
     return render_template('add.html', msg=msg)
 
 
@@ -117,10 +125,10 @@ def page_nate(id: str):
         return rederect('login')
     q_note = Note.query.filter_by(
         id=int(id, base=16)).first() if pattern.search(id) else False
-    dir_files = list(
-        filter(lambda x: id in x[:x.rfind('.')], os.listdir('static/notes')))
-    if not q_note or len(dir_files) != 0:
-        msg = "not such file"
+    dir_files = list(filter(lambda x: id in x[:x.rfind('.')], os.listdir('static/notes')))
+    if not q_note or len(dir_files) == 0:
+        msg = "not such note or file"
+        return render_template('note.html', msg=msg)
     if "-" not in q_note.time:
         if q_note.viewed >= int(q_note.time):
             msg = 'count viewed is over'
@@ -158,17 +166,22 @@ def login():
 
     msg = ''
     if request.method == "POST":
-        user_name = str(request.form.get('username'))
-        password = str(request.form.get('password'))
+        if captcha.validate():
+            print('lolprocg')
+            user_name = str(request.form.get('username'))
+            password = str(request.form.get('password'))
 
-        user = User.query.filter_by(usersname=user_name).first()
-        if user and user.password == str(sha256(password.encode()).hexdigest()):
-            session['usename'] = user.usersname
-            session['id'] = user.id
-            session['role'] = user.role
-            return redirect("/")
+            user = User.query.filter_by(usersname=user_name).first()
+            if user and user.password == str(sha256(password.encode()).hexdigest()):
+                session['usename'] = user.usersname
+                session['id'] = user.id
+                session['role'] = user.role
+                return redirect("/")
+            else:
+                msg = "error with username and password"
         else:
-            msg = "error with username and password"
+            msg = 'error with captcha'
+        
     return render_template("login.html", msg=msg)
 
 
