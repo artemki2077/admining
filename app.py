@@ -59,7 +59,7 @@ def page_add():
         return redirect('/login')
     if request.method == "POST":
         print(str(request.form))
-
+        
         
     return render_template('add.html')
     
@@ -108,5 +108,5 @@ admin.add_view(ModelView(User, db.session))
 
 if __name__ == "__main__":
     db.create_all()
-    app.run("localhost", port=8080, debug=True)
+    app.run("localhost", port=8080, debug=False)
     
